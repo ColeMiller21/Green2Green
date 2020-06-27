@@ -1,9 +1,14 @@
 import React from 'react';
+import Navbar from './Navbar';
+import Banner from './Banner';
+import ScoreTable from './ScoreTable';
 
 const Homepage = () => {
     return (
         <div>
-            <h1>Homepage</h1>
+            <Navbar />
+            <Banner />
+            <ScoreTable />
         </div>
     )
 }

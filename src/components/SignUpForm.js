@@ -17,11 +17,11 @@ const SignUpForm = () => {
                     </div>
                     <label>Password</label>
                     <div className="input-group mb-3">
-                        <input type="text" className="form-control" id="password" aria-describedby="basic-addon3" />
+                        <input type="password" className="form-control" id="password" aria-describedby="basic-addon3" />
                     </div>
                     <label>Confirm Password</label>
                     <div className="input-group mb-3">
-                        <input type="text" className="form-control" id="confirm-password" aria-describedby="basic-addon3" />
+                        <input type="password" className="form-control" id="confirm-password" aria-describedby="basic-addon3" />
                     </div>
                     <div className="text-center">
                         <Link to="/">
