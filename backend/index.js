@@ -1,32 +1,37 @@
-import express from 'express';
-import mongoose from 'mongoose';
-import bodyparser from 'body-parser';
-import cors from 'cors';
+const express = require('express');
+const mongoose = require('mongoose');
+const config = require('config');
 
 
+const scores = require('./routes/api/scores');
+const user = require('./routes/api/users');
+const auth = require('./routes/api/auth');
 
-const app = express()
-const PORT = 3001;
+const app = express();
+const PORT = process.env.PORT || 5000
 
-//mongo connection
-mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost/green2greenDB', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-});
+//bodyparser
+app.use(express.json());
 
-//body parser setup
-app.use(bodyparser.urlencoded({ extended: true }));
-app.use(bodyparser.json());
+//mongodb connection
+mongoose.connect(config.get('mongoURI'),
+    {
+        useNewUrlParser: true,
+        useUnifiedTopology: true
+    })
+    .then(() => console.log("MongoDB connected..."));
 
-
-//CORS setup
-
-app.use(cors());
-
-// routes(app);
-
+//use routes
+app.use('/api/scores', scores)
+app.use('/api/users', user)
+app.use('/api/auth', auth)
 
 app.listen(PORT, () => {
-    console.log(`Your server is running on ${PORT}`)
-});
+    console.log(`Server started on PORT ${PORT}`);
+})
+
+
+
+
+
+

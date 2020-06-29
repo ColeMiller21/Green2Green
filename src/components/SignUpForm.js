@@ -7,10 +7,6 @@ const SignUpForm = () => {
             <div style={styles.formDiv}>
                 <div className="justify-content-md-center col-md-auto" style={styles.formStyle}>
                     <h1 className="text-center">Sign Up!</h1>
-                    <label>Username</label>
-                    <div className="input-group mb-3">
-                        <input type="text" className="form-control" id="username" aria-describedby="basic-addon3" />
-                    </div>
                     <label>Email</label>
                     <div className="input-group mb-3">
                         <input type="text" className="form-control" id="email" aria-describedby="basic-addon3" />

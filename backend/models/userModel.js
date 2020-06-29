@@ -1,34 +1,46 @@
-import mongoose from 'mongoose';
-
+const mongoose = require('mongoose');
+const Score = require('./scoreModel');
 
 const Schema = mongoose.Schema
 
-const ScoreSchema = new Schema({
-    frontNine: {
-        type: Number,
-        required: true
-    },
-    backNine: {
-        type: Number,
-        required: true
-    },
-    totalScore: {
-        type: Number,
-        required: true
-    },
-    courseName: {
-        type: String
-    },
-    createdAt: {
-        type: Date,
-        default: Date.now
-    }
+// const ScoreSchema = new Schema({
+//     frontNine: {
+//         type: Number,
+//         required: true
+//     },
+//     backNine: {
+//         type: Number,
+//         required: true
+//     },
+//     totalScore: {
+//         type: Number,
+//         required: true
+//     },
+//     courseSlope: {
+//         type: Number,
+//         required: true
+//     },
+//     courseRating: {
+//         type: Number,
+//         required: true
+//     },
+//     courseName: {
+//         type: String
+//     },
+//     createdAt: {
+//         type: Date,
+//         default: Date.now
+//     }
 
-})
+// })
 
 
 const UserSchema = new Schema({
-    name: {
+    username: {
+        type: String,
+        required: true
+    },
+    password: {
         type: String,
         required: true
     },
@@ -38,12 +50,15 @@ const UserSchema = new Schema({
     },
     totalHandicap: {
         type: Number,
-        required: true,
         default: 0
     },
-    scores: [ScoreSchema]
+    scores: {
+        type: [],
+        default: undefined
+    }
+
 })
 
-const User = mongoose.model('user', UserSchema);
+const User = mongoose.model('User', UserSchema);
 
-export default User;
+module.exports = User;
