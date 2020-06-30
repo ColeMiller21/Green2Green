@@ -12,7 +12,7 @@ const User = require('../../models/userModel')
 //authenticate user
 
 router.post('/', (req, res) => {
-    const { username, email, password } = req.body;
+    const { email, password } = req.body;
 
     //validation
     if (!email || !password) {
@@ -38,7 +38,6 @@ router.post('/', (req, res) => {
                                 token,
                                 user: {
                                     id: user.id,
-                                    username: user.username,
                                     email: user.email
                                 }
                             })

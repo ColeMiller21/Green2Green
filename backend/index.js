@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const config = require('config');
+const cors = require('cors')
 
 
 const scores = require('./routes/api/scores');
@@ -25,6 +26,11 @@ mongoose.connect(config.get('mongoURI'),
 app.use('/api/scores', scores)
 app.use('/api/users', user)
 app.use('/api/auth', auth)
+
+
+//cors setup
+app.use(cors());
+
 
 app.listen(PORT, () => {
     console.log(`Server started on PORT ${PORT}`);

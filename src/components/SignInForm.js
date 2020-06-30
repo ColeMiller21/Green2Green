@@ -2,30 +2,48 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 
-const SignInForm = () => {
-    return (
-        <div style={styles.background}>
-            <div style={styles.formDiv}>
-                <div className="justify-content-md-center col-md-auto" style={styles.formStyle}>
-                    <h1 className="text-center">Sign In!</h1>
-                    <label>Email</label>
-                    <div className="input-group mb-3">
-                        <input type="text" className="form-control" id="username" aria-describedby="basic-addon3" />
-                    </div>
-                    <label>Password</label>
-                    <div className="input-group mb-3">
-                        <input type="password" className="form-control" id="password" aria-describedby="basic-addon3" />
-                    </div>
-                    <div className="text-center">
-                        <Link to="/home">
-                            <button type="button" className="btn btn-success" style={{ marginBottom: '6px' }} >Log In</button>
-                        </Link>
-                        <p>Not a member yet? Sign up <Link to="/signup">here!</Link></p>
+class SignInForm extends React.Component {
+
+    state = {
+        email: "",
+        password: ""
+    }
+
+    handleInputChange = (e) => {
+        this.setState({ [e.target.name]: e.target.value })
+    }
+
+    onSubmit = (e) => {
+        e.preventDefault();
+        console.log("button clicked")
+
+    }
+
+    render() {
+        return (
+            <div style={styles.background}>
+                <div style={styles.formDiv}>
+                    <div className="justify-content-md-center col-md-auto" style={styles.formStyle}>
+                        <h1 className="text-center">Sign In!</h1>
+                        <label>Email</label>
+                        <div className="input-group mb-3">
+                            <input type="text" name="email" value={this.state.email} onChange={this.handleInputChange} required className="form-control" id="username" aria-describedby="basic-addon3" />
+                        </div>
+                        <label>Password</label>
+                        <div className="input-group mb-3">
+                            <input type="password" name="password" value={this.state.password} onChange={this.handleInputChange} required className="form-control" id="password" aria-describedby="basic-addon3" />
+                        </div>
+                        <div className="text-center">
+                            <Link to="/home">
+                                <button type="button" name="password" onClick={this.onSubmit} className="btn btn-success" style={{ marginBottom: '6px' }} >Log In</button>
+                            </Link>
+                            <p>Not a member yet? Sign up <Link to="/signup">here!</Link></p>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    )
+        )
+    };
 };
 
 const styles = {
