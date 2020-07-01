@@ -1,5 +1,6 @@
 import React from 'react';
 import ScoreModal from './ScoreModal';
+import axios from 'axios';
 
 const scores = [
     {
@@ -26,11 +27,40 @@ const scores = [
 class ScoreTable extends React.Component {
 
     state = {
-        show: false
+        show: false,
+        scores: [],
+        currentUser: {}
     }
 
-    handleShow = () => { this.setState({ show: true }) };
+    componentDidMount() {
 
+        // grabbing current user from localstorage
+        // passing the signed in user token as a header
+        axios.get(`/api/auth/user`, { 'headers': { 'x-auth-token': localStorage.getItem('token') } })
+            .then(res => {
+                // res.data is the the user object after being verified through the auth/user endpoint
+                if (res.data) {
+                    this.setState({ currentUser: res.data }, () => this.getUserScores());
+                }
+            })
+
+    }
+
+    //function to grab scores based on userId
+    getUserScores = () => {
+        let id = this.state.currentUser._id
+        console.log(id)
+        axios.get(`/api/scores/` + id)
+            .then(res => {
+                console.log(res.data)
+                this.setState({ scores: res.data })
+
+            })
+            .catch(err => console.log(err))
+    }
+
+    //Modal handel methods
+    handleShow = () => { this.setState({ show: true }) };
     handleClose = () => { this.setState({ show: false }) };
 
 
@@ -44,6 +74,7 @@ class ScoreTable extends React.Component {
                             + New Score
                 </button>
                         <ScoreModal
+                            getuserscores={this.getUserScores}
                             show={this.state.show}
                             onHide={this.handleClose} />
                     </div>

@@ -4,6 +4,10 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema
 
 const ScoreSchema = new Schema({
+    userId: {
+        type: String,
+        required: true
+    },
     frontNine: {
         type: Number,
         required: true

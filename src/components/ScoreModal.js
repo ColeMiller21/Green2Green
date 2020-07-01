@@ -1,12 +1,12 @@
 import React from "react";
 import Modal from "react-bootstrap/Modal";
-
+import axios from 'axios';
 
 
 class ScoreModal extends React.Component {
 
     state = {
-        golfCourse: "",
+        courseName: "",
         front9: parseInt(0),
         back9: parseInt(0),
         courseRating: parseInt(0),
@@ -19,13 +19,39 @@ class ScoreModal extends React.Component {
         this.setState({ [e.target.name]: e.target.value })
     }
 
-    handleSubmit = (e) => {
+    onSubmit = (e) => {
         e.preventDefault();
-        this.setState({ totalScore: Number(this.state.front9) + Number(this.state.back9) })
+        this.setState({ totalScore: Number(this.state.front9) + Number(this.state.back9) }, () => {
+            console.log("clicked")
+            let userToken = JSON.stringify(localStorage.getItem('token'))
 
+            let newScore = {
+                //this will be the current user id
+                userId: userToken,
+                frontNine: this.state.front9,
+                backNine: this.state.back9,
+                courseRating: this.state.courseRating,
+                courseSlope: this.state.courseSlope,
+                totalScore: this.state.totalScore,
+                courseName: this.state.courseName
+            }
+
+            axios.post(`/api/scores`, newScore)
+                .then(res => {
+                    console.log(res)
+                    this.setState({
+                        courseName: "",
+                        front9: parseInt(0),
+                        back9: parseInt(0),
+                        courseRating: parseInt(0),
+                        courseSlope: parseInt(0),
+                        totalScore: parseInt(0)
+                    })
+                })
+                .catch(err => console.log(err))
+        })
+        this.props.onHide();
     }
-
-
 
     render() {
         return (
@@ -47,7 +73,7 @@ class ScoreModal extends React.Component {
                         <div id="leftDiv" className="col">
                             <label>Golf Course</label>
                             <div className="input-group mb-3">
-                                <input type="text" placeholder="ex. Cowboys Golf Course" name="golfCourse" value={this.state.golfCourse} onChange={this.handleInputChange} className="form-control" aria-describedby="basic-addon3" />
+                                <input type="text" placeholder="ex. Cowboys Golf Course" name="courseName" value={this.state.courseName} onChange={this.handleInputChange} className="form-control" aria-describedby="basic-addon3" />
                             </div>
                             <label>Front 9</label>
                             <div className="input-group mb-3">
@@ -72,7 +98,7 @@ class ScoreModal extends React.Component {
                     <div className="text-center">
                         <h2>{parseInt(this.state.front9) + parseInt(this.state.back9)}</h2>
                         <p>Total Score</p>
-                        <button type="button" onClick={this.handleSubmit} className="btn btn-success btn-block">Submit Score</button>
+                        <button type="button" onClick={this.onSubmit} className="btn btn-success btn-block" >Submit Score</button>
                     </div>
                 </Modal.Body>
             </Modal>

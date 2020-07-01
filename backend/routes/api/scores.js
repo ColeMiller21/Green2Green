@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const auth = require('../../middleware/auth');
+const mongoose = require('mongoose');
 
 //score model
 const Score = require('../../models/scoreModel')
@@ -14,16 +15,30 @@ router.get('/', (req, res) => {
         .sort({ date: -1 })
         .then(scores => res.json(scores))
 })
+//route GET api/scores
+// '/' === '/api/scores'
+//desc all by users id
+
+router.get('/:userId', (req, res) => {
+    Score.find({ userId: mongoose.Types.ObjectId(req.params.id) })
+        .sort({ date: -1 })
+        .then(scores => res.json(scores))
+})
+
 
 //route POST api/scores
 // '/' === '/api/scores'
-//desc post a score
+//create a score
 
 router.post('/', (req, res) => {
     const newScore = new Score({
+        userId: req.body.userId,
         frontNine: req.body.frontNine,
-        backNine: req.body.backNine
-        //add rest of model
+        backNine: req.body.backNine,
+        totalScore: req.body.totalScore,
+        courseSlope: req.body.courseSlope,
+        courseRating: req.courseRating,
+        courseName: req.body.courseName
     });
     newScore.save().then(score => res.json(score));
 

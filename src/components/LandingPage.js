@@ -6,12 +6,17 @@ import Homepage from '../components/Homepage';
 
 
 class LandingPage extends React.Component {
+    state = {
+        isAuth: false
+    }
+
     render() {
         return (
             <Router>
                 <Switch>
                     <Route path="/" exact component={SignInForm} />
                     <Route path='/signup' component={SignUpForm} />
+                    {/* Change to ProtectedRoute */}
                     <Route path='/home' component={Homepage} />
                 </Switch>
 

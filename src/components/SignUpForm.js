@@ -1,7 +1,6 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import axios from 'axios';
-axios.defaults.withCredentials = true;
+import "./mediastyles.css";
 
 class SignUpForm extends React.Component {
     state = {
@@ -22,15 +21,25 @@ class SignUpForm extends React.Component {
         }
         axios.post(`/api/users`, newUser)
             .then(res => {
-                console.log(res.data)
-                let data = res.data;
-                console.log(data.user.id)
+                if (res.data) {
+                    console.log(res.data)
+                    let data = res.data;
+                    console.log(data.user.id)
+                    this.props.history.push('/');
+                } else {
+                    alert("Sign up unsuccessful")
+                }
             })
             .catch(err => console.log(err))
+
+
     }
     render() {
         return (
             <div style={styles.background}>
+                <div className="text-center">
+                    <h1 className="heading">Green 2 Green</h1>
+                </div>
                 <div style={styles.formDiv}>
                     <div className="justify-content-md-center col-md-auto" style={styles.formStyle}>
                         <h1 className="text-center">Sign Up!</h1>
@@ -47,9 +56,9 @@ class SignUpForm extends React.Component {
                             <input type="password" name="passwordConfirm" value={this.state.passwordConfirm} onChange={this.handleInputChange} className="form-control" aria-describedby="basic-addon3" />
                         </div>
                         <div className="text-center">
-                            <Link to="/">
-                                <button type="button" onClick={this.onSubmit} className="btn btn-success" >Sign Up</button>
-                            </Link>
+
+                            <button type="button" onClick={this.onSubmit} className="btn btn-success" >Sign Up</button>
+
                         </div >
                     </div >
                 </div>

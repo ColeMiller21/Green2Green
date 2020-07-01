@@ -6,7 +6,7 @@ const Navbar = () => {
     return (
 
         <nav style={styles.navStyle} className="navbar navbar-light bg-light">
-            <span style={{ color: 'white' }} className="navbar-brand mb-0 mx-auto h1">Green 2 Green</span>
+            <span style={{ color: 'white', fontFamily: 'Rock Salt, cursive', fontSize: '1.5rem' }} className="navbar-brand mb-0 mx-auto h1">Green 2 Green</span>
         </nav>
     )
 
