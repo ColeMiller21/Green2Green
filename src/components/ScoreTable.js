@@ -29,7 +29,8 @@ class ScoreTable extends React.Component {
     state = {
         show: false,
         scores: [],
-        currentUser: {}
+        currentUser: {},
+        isCurrentUser: false
     }
 
     componentDidMount() {
@@ -38,6 +39,7 @@ class ScoreTable extends React.Component {
         // passing the signed in user token as a header
         axios.get(`/api/auth/user`, { 'headers': { 'x-auth-token': localStorage.getItem('token') } })
             .then(res => {
+                console.log(res.data)
                 // res.data is the the user object after being verified through the auth/user endpoint
                 if (res.data) {
                     this.setState({ currentUser: res.data }, () => this.getUserScores());
@@ -74,7 +76,8 @@ class ScoreTable extends React.Component {
                             + New Score
                 </button>
                         <ScoreModal
-                            getuserscores={this.getUserScores}
+                            getScores={this.getUserScores}
+                            currentUser={this.state.currentUser}
                             show={this.state.show}
                             onHide={this.handleClose} />
                     </div>
@@ -100,18 +103,7 @@ class ScoreTable extends React.Component {
                                 </tr>
                             )
                         })}
-                        {/* <tr>
-                            <th scope="row">96</th>
-                            <td>Waterchase Golf Course</td>
-                            <td>48</td>
-                            <td>48</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">100</th>
-                            <td>Cowboys Golf Course</td>
-                            <td>50</td>
-                            <td>50</td>
-                        </tr> */}
+
                     </tbody>
                 </table>
             </div>

@@ -1,9 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const auth = require('../../middleware/auth');
 const mongoose = require('mongoose');
 
 //score model
+const User = require('../../models/userModel');
 const Score = require('../../models/scoreModel')
 
 //route GET api/scores
@@ -20,7 +20,11 @@ router.get('/', (req, res) => {
 //desc all by users id
 
 router.get('/:userId', (req, res) => {
+    // User.find({ userId: mongoose.Types.ObjectId(req.params.id) })
+    //     .populate('Score')
+    // then(scores => res.json(scores))
     Score.find({ userId: mongoose.Types.ObjectId(req.params.id) })
+        .populate('Score')
         .sort({ date: -1 })
         .then(scores => res.json(scores))
 })

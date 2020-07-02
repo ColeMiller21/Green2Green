@@ -6,9 +6,6 @@ import Homepage from '../components/Homepage';
 
 
 class LandingPage extends React.Component {
-    state = {
-        isAuth: false
-    }
 
     render() {
         return (

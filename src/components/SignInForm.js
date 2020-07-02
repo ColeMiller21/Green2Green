@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import TextField from '@material-ui/core/TextField';
 import axios from 'axios';
 import "./mediastyles.css";
 
@@ -10,7 +11,7 @@ class SignInForm extends React.Component {
         email: "",
         password: "",
         currentUser: {},
-        isAuthorized: false
+        submitError: false
     }
 
     handleInputChange = (e) => {
@@ -45,26 +46,10 @@ class SignInForm extends React.Component {
                 }
             })
             .catch(err => {
-                console.log(err)
-                // alert("Error when logging in try again")
+                if (err) {
+                    this.setState({ submitError: true })
+                }
             })
-        // .finally(() => {
-        //     //passing the signed in user token as a header
-        //     axios.get(`/api/auth/user`, { 'headers': { 'x-auth-token': this.state.currentUser.token } })
-        //         .then(res => {
-        //             // res.data is the the user object after being verified through the auth/user endpoint
-        //             if (res.data) {
-        //                 console.log(res)
-        //                 this.setState({ isAuthorized: true }, () => {
-        //                     console.log(this.state)
-        //                 })
-        //             }
-        //             if (this.state.isAuthorized) {
-        //                 this.props.history.push('/home');
-        //             }
-
-        //         })
-        // })
     }
 
     render() {
@@ -75,20 +60,34 @@ class SignInForm extends React.Component {
                 </div>
                 <div style={styles.formDiv}>
                     <div className="justify-content-md-center col-md-auto" style={styles.formStyle}>
-                        <h1 className="text-center">Sign In!</h1>
-                        <label>Email</label>
-                        <div className="input-group mb-3">
-                            <input type="text" name="email" value={this.state.email} onChange={this.handleInputChange} required className="form-control" id="username" aria-describedby="basic-addon3" />
+                        <h1 className="text-center" style={{ fontFamily: 'Rock Salt, cursive' }}>Sign In!</h1>
+
+                        <div className="text-center">
+                            <TextField
+                                name="email"
+                                label="Email"
+                                value={this.state.email}
+                                onChange={this.handleInputChange}
+                                margin="normal"
+                            />
                         </div>
-                        <label>Password</label>
-                        <div className="input-group mb-3">
-                            <input type="password" name="password" value={this.state.password} onChange={this.handleInputChange} required className="form-control" id="password" aria-describedby="basic-addon3" />
+                        <div className="text-center">
+                            <TextField
+                                name="password"
+                                label="Password"
+                                type="password"
+                                value={this.state.password}
+                                onChange={this.handleInputChange}
+                                margin="normal"
+                            />
                         </div>
                         <div className="text-center">
                             <Link to="/home">
-                                <button type="button" name="password" onClick={this.onSubmit} className="btn btn-success" style={{ marginBottom: '6px' }} >Log In</button>
+                                <button type="button" name="password" onClick={this.onSubmit} className="btn btn-success" style={{ marginBottom: '6px', marginTop: '15px' }} >Log In</button>
                             </Link>
                             <p>Not a member yet? Sign up <Link to="/signup">here!</Link></p>
+                            {this.state.submitError ? <p style={{ color: 'red', fontSize: "12px" }}>Error logging up make sure information is correct </p> : <p></p>}
+
                         </div>
                     </div>
                 </div>

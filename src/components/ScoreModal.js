@@ -14,20 +14,21 @@ class ScoreModal extends React.Component {
         totalScore: parseInt(0)
     }
 
-
     handleInputChange = (e) => {
         this.setState({ [e.target.name]: e.target.value })
+        if ([e.target.name] === "") {
+            e.target.value = 0
+        }
     }
 
     onSubmit = (e) => {
         e.preventDefault();
         this.setState({ totalScore: Number(this.state.front9) + Number(this.state.back9) }, () => {
             console.log("clicked")
-            let userToken = JSON.stringify(localStorage.getItem('token'))
 
             let newScore = {
                 //this will be the current user id
-                userId: userToken,
+                userId: this.props.currentUser._id,
                 frontNine: this.state.front9,
                 backNine: this.state.back9,
                 courseRating: this.state.courseRating,
@@ -51,12 +52,14 @@ class ScoreModal extends React.Component {
                 .catch(err => console.log(err))
         })
         this.props.onHide();
+        this.props.getScores();
     }
 
     render() {
         return (
             <Modal
-                {...this.props}
+                show={this.props.show}
+                onHide={this.props.onHide}
                 size="lg"
                 aria-labelledby="contained-modal-title-vcenter"
                 centered

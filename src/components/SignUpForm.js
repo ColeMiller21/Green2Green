@@ -1,20 +1,38 @@
 import React from 'react';
+import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
-import "./mediastyles.css";
+import './mediastyles.css';
 
 class SignUpForm extends React.Component {
     state = {
-        email: "",
-        password: "",
-        passwordConfirm: ""
+
+        email: '',
+        password: '',
+        confirmPassword: "",
+        submitError: false
     }
 
-    handleInputChange = (e) => {
-        this.setState({ [e.target.name]: e.target.value });
+    componentDidMount() {
+        ValidatorForm.addValidationRule('isPasswordMatch', (value) => {
+            if (value !== this.state.password) {
+                return false
+            }
+            return true;
+        })
+    }
+
+    componentWillUnmount() {
+        ValidatorForm.removeValidationRule('isPasswordMatch')
+    }
+
+    handleChange = (e) => {
+        this.setState({ [e.target.name]: e.target.value })
     }
 
     onSubmit = (e) => {
         e.preventDefault();
+
         let newUser = {
             email: this.state.email,
             password: this.state.password
@@ -30,10 +48,15 @@ class SignUpForm extends React.Component {
                     alert("Sign up unsuccessful")
                 }
             })
-            .catch(err => console.log(err))
+            .catch(err => {
+                if (err) {
+                    this.setState({ submitError: true })
+                }
+            })
 
 
     }
+
     render() {
         return (
             <div style={styles.background}>
@@ -42,30 +65,63 @@ class SignUpForm extends React.Component {
                 </div>
                 <div style={styles.formDiv}>
                     <div className="justify-content-md-center col-md-auto" style={styles.formStyle}>
-                        <h1 className="text-center">Sign Up!</h1>
-                        <label>Email</label>
-                        <div className="input-group mb-3">
-                            <input type="text" name="email" value={this.state.email} onChange={this.handleInputChange} className="form-control" aria-describedby="basic-addon3" />
-                        </div>
-                        <label>Password</label>
-                        <div className="input-group mb-3">
-                            <input type="password" name="password" value={this.state.password} onChange={this.handleInputChange} className="form-control" aria-describedby="basic-addon3" />
-                        </div>
-                        <label>Confirm Password</label>
-                        <div className="input-group mb-3">
-                            <input type="password" name="passwordConfirm" value={this.state.passwordConfirm} onChange={this.handleInputChange} className="form-control" aria-describedby="basic-addon3" />
-                        </div>
-                        <div className="text-center">
+                        <h1 className="text-center" style={{ fontFamily: 'Rock Salt, cursive' }}>Sign Up!</h1>
 
-                            <button type="button" onClick={this.onSubmit} className="btn btn-success" >Sign Up</button>
+                        <ValidatorForm
+                            ref="form"
+                            onSubmit={this.onSubmit}
+                        >
+                            <div className="text-center">
+                                <TextValidator
+                                    label="Email"
+                                    onChange={this.handleChange}
+                                    name="email"
+                                    value={this.state.email}
+                                    validators={['required', 'isEmail']}
+                                    errorMessages={['this field is required', 'email is not valid']}
+                                    margin="normal"
+                                />
+                            </div>
+                            <div className="text-center">
+                                <TextValidator
+                                    label="Password"
+                                    onChange={this.handleChange}
+                                    name="password"
+                                    type="password"
+                                    value={this.state.password}
+                                    validators={['required']}
+                                    errorMessages={['this field is required']}
+                                    margin="normal"
+                                />
+                            </div>
+                            <div className="text-center">
+                                <TextValidator
+                                    label="Confirm Password"
+                                    onChange={this.handleChange}
+                                    name="confirmPassword"
+                                    type="password"
+                                    validators={['isPasswordMatch', 'required']}
+                                    errorMessages={['password mismatch', 'this field is required']}
+                                    value={this.state.confirmPassword}
+                                    margin="normal"
+                                />
+                            </div>
 
-                        </div >
-                    </div >
+                            <div className="text-center">
+                                <Link to="/home">
+                                    <button type="button" name="password" onClick={this.onSubmit} className="btn btn-success" style={{ marginBottom: '10px', marginTop: '20px' }} >Log In</button>
+                                </Link>
+                            </div>
+                            <div className="text-center">
+                                {this.state.submitError ? <p style={{ color: 'red', fontSize: "12px" }}>Error signing up make sure information is correct </p> : <p></p>}
+                            </div>
+                        </ValidatorForm>
+                    </div>
                 </div>
-            </div>
-        )
-    };
-};
+            </div >
+        );
+    }
+}
 
 const styles = {
     formStyle: {
@@ -90,7 +146,5 @@ const styles = {
     }
 }
 
-
 export default SignUpForm;
-
 
