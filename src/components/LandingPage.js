@@ -1,7 +1,7 @@
 import React from 'react';
 import SignInForm from './SignInForm';
 import SignUpForm from './SignUpForm';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { HashRouter as Router, Switch, Route } from 'react-router-dom';
 import Homepage from '../components/Homepage';
 
 
