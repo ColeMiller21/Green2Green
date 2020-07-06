@@ -53,10 +53,7 @@ class SignUpForm extends React.Component {
                     this.setState({ submitError: true })
                 }
             })
-
-
     }
-
     render() {
         return (
             <div style={styles.background}>
@@ -109,11 +106,11 @@ class SignUpForm extends React.Component {
 
                             <div className="text-center">
                                 <Link to="/home">
-                                    <button type="button" name="password" onClick={this.onSubmit} className="btn btn-success" style={{ marginBottom: '10px', marginTop: '20px' }} >Log In</button>
+                                    <button type="button" name="password" onClick={this.onSubmit} className="btn btn-success" style={{ marginBottom: '10px', marginTop: '20px' }} >Sign Up</button>
                                 </Link>
                             </div>
                             <div className="text-center">
-                                {this.state.submitError ? <p style={{ color: 'red', fontSize: "12px" }}>Error signing up make sure information is correct </p> : <p></p>}
+                                {this.state.submitError ? <p style={{ color: 'red', fontSize: "12px", fontFamily: 'Roboto, sans-serif' }}>Error signing up make sure information is correct </p> : <p></p>}
                             </div>
                         </ValidatorForm>
                     </div>

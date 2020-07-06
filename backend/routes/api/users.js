@@ -5,7 +5,39 @@ const config = require('config');
 const jwt = require('jsonwebtoken');
 
 //score model
-const User = require('../../models/userModel')
+const User = require('../../models/userModel');
+
+
+//GET api/users
+//get all user information
+
+
+router.get("/", (req, res) => {
+    User.find((err, users) => {
+        if (err) {
+            res.status(500)
+            return next(err)
+        }
+        return res.status(200).send(users)
+    })
+})
+
+
+//route PUT api/users
+//updating users totalHandicap
+
+router.put('/:userId', (req, res) => {
+
+    User.findByIdAndUpdate(req.params.userId, req.body, { new: true }, (err, user) => {
+        if (err) {
+            res.status(500)
+        }
+        return res.send(user)
+    })
+
+})
+
+
 
 //route POST api/users
 

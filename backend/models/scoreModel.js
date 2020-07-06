@@ -4,10 +4,6 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema
 
 const ScoreSchema = new Schema({
-    userId: {
-        type: String,
-        required: true
-    },
     frontNine: {
         type: Number,
         required: true
@@ -34,6 +30,11 @@ const ScoreSchema = new Schema({
     createdAt: {
         type: Date,
         default: Date.now
+    },
+    user: {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
     }
 
 })

@@ -1,12 +1,19 @@
 import React from 'react';
 import golfballImage from "../images/golfball.png";
 
-const Banner = () => {
+const Banner = (props) => {
     return (
         <div className="img-thumbnail" style={styles.imageDiv}>
             <div style={styles.bannerText}>
-                <h1 style={{ fontSize: '6rem' }} className="text-center">00</h1>
-                <h1 style={{ fontSize: '1.5rem' }} className="text-center">Player Handicap</h1>
+
+                {props.handicapReached ?
+                    <div>
+                        <h1 style={{ fontSize: '6rem' }} className="text-center">{props.currentUser.totalHandicap}</h1>
+                        <h1 style={{ fontSize: '1.5rem' }} className="text-center">Handicap</h1>
+                    </div>
+                    : <div><h1 style={{ fontSize: '6rem' }} className="text-center">00</h1>
+                        <h1 style={{ fontSize: '1.5rem' }} className="text-center">Still need {props.tillHandicap} more scores!</h1></div>}
+
             </div>
 
         </div>

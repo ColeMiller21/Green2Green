@@ -1,4 +1,5 @@
 import React from 'react';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
 
 const Navbar = (props) => {
@@ -8,7 +9,7 @@ const Navbar = (props) => {
         <nav style={styles.navStyle} className="navbar navbar-light bg-light">
             <span style={{ color: 'white', fontFamily: 'Rock Salt, cursive', fontSize: '1.3rem' }} className="navbar-brand mb-0 mx-auto h1">Green 2 Green</span>
             <ul className="nav n<li>Logout</li>avbar-nav navbar-right">
-                {props.isCurrentUser ? <li style={{ fontFamily: 'Roboto, sans-serif', color: 'white', cursor: 'pointer' }} onClick={props.userLogout}>Logout</li> : <li></li>}
+                {props.isCurrentUser ? <li style={{ fontFamily: 'Roboto, sans-serif', color: 'white', cursor: 'pointer' }} onClick={props.userLogout}><ExitToAppIcon /></li> : <li></li>}
             </ul>
         </nav>
     )

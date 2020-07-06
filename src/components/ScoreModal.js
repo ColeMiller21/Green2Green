@@ -28,11 +28,11 @@ class ScoreModal extends React.Component {
 
             let newScore = {
                 //this will be the current user id
-                userId: this.props.currentUser._id,
+                user: this.props.currentUser._id,
                 frontNine: this.state.front9,
                 backNine: this.state.back9,
-                courseRating: this.state.courseRating,
-                courseSlope: this.state.courseSlope,
+                // courseRating: this.state.courseRating,
+                // courseSlope: this.state.courseSlope,
                 totalScore: this.state.totalScore,
                 courseName: this.state.courseName
             }

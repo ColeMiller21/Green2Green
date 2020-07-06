@@ -15,18 +15,20 @@ router.get('/', (req, res) => {
         .sort({ date: -1 })
         .then(scores => res.json(scores))
 })
+
+
 //route GET api/scores
 // '/' === '/api/scores'
 //desc all by users id
 
 router.get('/:userId', (req, res) => {
-    // User.find({ userId: mongoose.Types.ObjectId(req.params.id) })
-    //     .populate('Score')
-    // then(scores => res.json(scores))
-    Score.find({ userId: mongoose.Types.ObjectId(req.params.id) })
-        .populate('Score')
-        .sort({ date: -1 })
-        .then(scores => res.json(scores))
+    Score.find({ user: req.params.userId }, (err, scores) => {
+        if (err) {
+            res.status(500);
+            return (err)
+        }
+        return res.status(200).send(scores)
+    })
 })
 
 
@@ -36,12 +38,12 @@ router.get('/:userId', (req, res) => {
 
 router.post('/', (req, res) => {
     const newScore = new Score({
-        userId: req.body.userId,
+        user: req.body.user,
         frontNine: req.body.frontNine,
         backNine: req.body.backNine,
         totalScore: req.body.totalScore,
         courseSlope: req.body.courseSlope,
-        courseRating: req.courseRating,
+        courseRating: req.body.courseRating,
         courseName: req.body.courseName
     });
     newScore.save().then(score => res.json(score));

@@ -6,7 +6,8 @@ const Schema = mongoose.Schema
 const UserSchema = new Schema({
     email: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     password: {
         type: String,
@@ -15,8 +16,8 @@ const UserSchema = new Schema({
     totalHandicap: {
         type: Number,
         default: 0
-    },
-    scores: { type: Schema.Types.ObjectId, ref: 'Score' }
+    }
+    // scores: { type: Schema.Types.ObjectId, ref: 'Score' }
 
 })
 
