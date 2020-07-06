@@ -1,23 +1,23 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "37107a74db12b418e7089df28b020d1d",
+    "revision": "3c2042afb5989496a9e14d81d132ed6b",
     "url": "/Green2Green/index.html"
   },
   {
-    "revision": "f9b907c5cecf7d223888",
+    "revision": "5f9aab770e7e61430b9b",
     "url": "/Green2Green/static/css/main.c208db40.chunk.css"
   },
   {
-    "revision": "00adfa98ecf81dcdf89b",
-    "url": "/Green2Green/static/js/2.4eae9c44.chunk.js"
+    "revision": "82e16240bdfad44378fd",
+    "url": "/Green2Green/static/js/2.c9e31a81.chunk.js"
   },
   {
     "revision": "5e9b6f5c16b720e8a86875f97734673e",
-    "url": "/Green2Green/static/js/2.4eae9c44.chunk.js.LICENSE.txt"
+    "url": "/Green2Green/static/js/2.c9e31a81.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "f9b907c5cecf7d223888",
-    "url": "/Green2Green/static/js/main.68b92152.chunk.js"
+    "revision": "5f9aab770e7e61430b9b",
+    "url": "/Green2Green/static/js/main.dbdb9548.chunk.js"
   },
   {
     "revision": "c378e19114ef10809349",
