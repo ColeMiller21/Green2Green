@@ -34,13 +34,9 @@ router.put('/:userId', (req, res) => {
         }
         return res.send(user)
     })
-
 })
 
-
-
 //route POST api/users
-
 //register new users
 
 router.post('/', (req, res) => {

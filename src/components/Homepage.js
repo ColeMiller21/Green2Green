@@ -23,7 +23,6 @@ class Homepage extends React.Component {
         // passing the signed in user token as a header
         axios.get(`/api/auth/user`, { 'headers': { 'x-auth-token': localStorage.getItem('token') } })
             .then(res => {
-                console.log(res.data)
                 // res.data is the the user object after being verified through the auth/user endpoint
                 if (res.data) {
                     this.setState({ currentUser: res.data, isCurrentUser: true }, () => this.getUserScores());
@@ -34,12 +33,9 @@ class Homepage extends React.Component {
 
     getHandicap = () => {
         // getting the length of scores to make sure there is enough to calculate handicap
-        console.log(this.state.scores.length)
-        console.log(this.state.currentUser)
         if (this.state.scores.length < 3) {
             let tillHandicap = 10 - this.state.scores.length
             this.setState({ tillHandicap })
-            console.log(this.state.tillHandicap)
         }
         //has enough of a handicap and sorting scores from least to greatest
         else {
@@ -59,15 +55,10 @@ class Homepage extends React.Component {
                 calcHandicap = calcHandicap * 113
                 calcHandicap = calcHandicap / score.courseSlope
                 calcHandicap = calcHandicap.toFixed(2)
-                console.log(calcHandicap)
                 calcScores.push(parseFloat(calcHandicap))
 
             })
-
-            console.log(calcScores)
             this.averageHandicap(calcScores)
-
-
         }
     }
 
@@ -78,8 +69,6 @@ class Homepage extends React.Component {
             sum += array[i]
         }
         let finalHandicap = Math.round(sum / array.length)
-        console.log(finalHandicap)
-        console.log(this.state.currentUser._id)
         //axios call to update user handicap
         axios.put('/api/users/' + this.state.currentUser._id, { totalHandicap: finalHandicap })
             .then(res => console.log(res.data));
@@ -87,10 +76,9 @@ class Homepage extends React.Component {
     //function to grab scores based on userId
     getUserScores = () => {
         let id = this.state.currentUser._id
-        console.log(id)
+
         axios.get(`/api/scores/` + id)
             .then(res => {
-                console.log(res.data)
                 this.setState({ scores: res.data })
                 this.getHandicap();
             })

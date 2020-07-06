@@ -20,7 +20,6 @@ class SignInForm extends React.Component {
 
     onSubmit = (e) => {
         e.preventDefault();
-        console.log("button clicked")
         //values from the input fields 
         let user = {
             email: this.state.email,
@@ -40,13 +39,13 @@ class SignInForm extends React.Component {
                     })
                     ///////set local storage with token and user information///////
                     localStorage.setItem('token', this.state.currentUser.token)
-                    console.log(JSON.stringify(localStorage.getItem('token')))
                     //pushing to Homepage once user is given a token
                     this.props.history.push('/home');
                 }
             })
             .catch(err => {
                 if (err) {
+                    console.log(err)
                     this.setState({ submitError: true })
                 }
             })
