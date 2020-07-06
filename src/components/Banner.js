@@ -13,9 +13,7 @@ const Banner = (props) => {
                     </div>
                     : <div><h1 style={{ fontSize: '6rem' }} className="text-center">00</h1>
                         <h1 style={{ fontSize: '1.5rem' }} className="text-center">Still need {props.tillHandicap} more scores!</h1></div>}
-
             </div>
-
         </div>
     )
 }
