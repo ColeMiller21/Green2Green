@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/Green2Green/static/css/main.c208db40.chunk.css",
+    "main.js": "/Green2Green/static/js/main.68b92152.chunk.js",
+    "main.js.map": "/Green2Green/static/js/main.68b92152.chunk.js.map",
+    "runtime-main.js": "/Green2Green/static/js/runtime-main.15ad30f1.js",
+    "runtime-main.js.map": "/Green2Green/static/js/runtime-main.15ad30f1.js.map",
+    "static/js/2.4eae9c44.chunk.js": "/Green2Green/static/js/2.4eae9c44.chunk.js",
+    "static/js/2.4eae9c44.chunk.js.map": "/Green2Green/static/js/2.4eae9c44.chunk.js.map",
+    "index.html": "/Green2Green/index.html",
+    "precache-manifest.e201f19fa3cf44b60d0acc660123e9c7.js": "/Green2Green/precache-manifest.e201f19fa3cf44b60d0acc660123e9c7.js",
+    "service-worker.js": "/Green2Green/service-worker.js",
+    "static/css/main.c208db40.chunk.css.map": "/Green2Green/static/css/main.c208db40.chunk.css.map",
+    "static/js/2.4eae9c44.chunk.js.LICENSE.txt": "/Green2Green/static/js/2.4eae9c44.chunk.js.LICENSE.txt",
+    "static/media/golfball.png": "/Green2Green/static/media/golfball.e1490b4a.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.15ad30f1.js",
+    "static/js/2.4eae9c44.chunk.js",
+    "static/css/main.c208db40.chunk.css",
+    "static/js/main.68b92152.chunk.js"
+  ]
+}
