@@ -10,14 +10,17 @@ class SignUpForm extends React.Component {
         email: '',
         password: '',
         confirmPassword: "",
-        submitError: false
+        submitError: false,
+        buttonDisabled: true
     }
 
     componentDidMount() {
         ValidatorForm.addValidationRule('isPasswordMatch', (value) => {
             if (value !== this.state.password) {
+
                 return false
             }
+            this.setState({ buttonDisabled: false })
             return true;
         })
     }
@@ -32,27 +35,33 @@ class SignUpForm extends React.Component {
 
     onSubmit = (e) => {
         e.preventDefault();
+        if (!this.state.submitError) {
+            this.setState({ submitError: true })
 
-        let newUser = {
-            email: this.state.email,
-            password: this.state.password
         }
-        axios.post(`/api/users`, newUser)
-            .then(res => {
-                if (res.data) {
-                    console.log(res.data)
-                    let data = res.data;
-                    console.log(data.user.id)
-                    this.props.history.push('/');
-                } else {
-                    alert("Sign up unsuccessful")
-                }
-            })
-            .catch(err => {
-                if (err) {
-                    this.setState({ submitError: true })
-                }
-            })
+        else {
+
+            let newUser = {
+                email: this.state.email,
+                password: this.state.password
+            }
+            axios.post(`/api/users`, newUser)
+                .then(res => {
+                    if (res.data) {
+                        console.log(res.data)
+                        let data = res.data;
+                        console.log(data.user.id)
+                        this.props.history.push('/');
+                    } else {
+                        alert("Sign up unsuccessful")
+                    }
+                })
+                .catch(err => {
+                    if (err) {
+                        this.setState({ submitError: true })
+                    }
+                })
+        }
     }
     render() {
         return (
@@ -106,7 +115,7 @@ class SignUpForm extends React.Component {
 
                             <div className="text-center">
                                 <Link to="/home">
-                                    <button type="button" name="password" onClick={this.onSubmit} className="btn btn-success" style={{ marginBottom: '10px', marginTop: '20px' }} >Sign Up</button>
+                                    <button type="submit" name="password" disabled={this.state.buttonDisabled} onClick={this.onSubmit} className="btn btn-success" style={{ marginBottom: '10px', marginTop: '20px' }} >Sign Up</button>
                                 </Link>
                             </div>
                             <div className="text-center">

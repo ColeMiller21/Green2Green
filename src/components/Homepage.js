@@ -5,8 +5,6 @@ import ScoreModal from './ScoreModal';
 import axios from 'axios';
 import moment from 'moment';
 
-import NewScoreModal from './NewScoreModal';
-
 
 class Homepage extends React.Component {
     state = {
@@ -119,7 +117,7 @@ class Homepage extends React.Component {
                             }} onClick={this.handleShow} type="button" className="btn btn-success btn-block" data-toggle="modal" data-target="#exampleModal">
                                 + New Score
                 </button>
-                            <NewScoreModal
+                            <ScoreModal
                                 getScores={this.getUserScores}
                                 currentUser={this.state.currentUser}
                                 show={this.state.show}

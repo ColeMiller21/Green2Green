@@ -1,60 +1,101 @@
 import React from "react";
 import Modal from "react-bootstrap/Modal";
 import axios from 'axios';
+import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
+import Grid from '@material-ui/core/Grid';
+
 
 
 class ScoreModal extends React.Component {
 
     state = {
         courseName: "",
-        front9: parseInt(0),
-        back9: parseInt(0),
-        courseRating: parseInt(0),
-        courseSlope: parseInt(0),
-        totalScore: parseInt(0)
+        frontNine: "",
+        backNine: "",
+        courseRating: "",
+        courseSlope: "",
+        totalScore: parseInt(0),
+        formError: false
     }
+
+    handleValidation = (state) => {
+        console.log(state)
+        if (state.courseName === "") {
+            return false
+        }
+        if (state.frontNine === "") {
+            return false
+        }
+        if (state.backNine === "") {
+            return false
+        }
+        if (state.courseSlope === "") {
+            return false
+        }
+        if (state.courseRating === "") {
+            return false
+        }
+        else {
+            return true
+        }
+
+    }
+
 
     handleInputChange = (e) => {
         this.setState({ [e.target.name]: e.target.value })
-        if ([e.target.name] === "") {
-            e.target.value = 0
+
+
+    }
+
+    numberInputChange = (e) => {
+        if (e.target.value === '' || /^\d+$/.test(e.target.value)) {
+            this.setState({ [e.target.name]: e.target.value })
+        } else {
+            return false;
         }
     }
 
+
     onSubmit = (e) => {
         e.preventDefault();
-        this.setState({ totalScore: Number(this.state.front9) + Number(this.state.back9) }, () => {
-            console.log("clicked")
+        if (!this.handleValidation(this.state)) {
+            console.log("Form Error")
+            this.setState({ formError: true })
 
-            let newScore = {
-                //this will be the current user id
-                user: this.props.currentUser._id,
-                frontNine: this.state.front9,
-                backNine: this.state.back9,
-                // courseRating: this.state.courseRating,
-                // courseSlope: this.state.courseSlope,
-                totalScore: this.state.totalScore,
-                courseName: this.state.courseName
-            }
+        } else {
+            this.setState({ totalScore: Number(this.state.frontNine) + Number(this.state.backNine) }, () => {
+                console.log("Form Submitted")
+                this.setState({ formError: false })
+                let newScore = {
+                    //this will be the current user id
+                    user: this.props.currentUser._id,
+                    frontNine: this.state.frontNine,
+                    backNine: this.state.backNine,
+                    courseRating: this.state.courseRating,
+                    courseSlope: this.state.courseSlope,
+                    totalScore: this.state.totalScore,
+                    courseName: this.state.courseName
+                }
 
-            axios.post(`/api/scores`, newScore)
-                .then(res => {
-                    console.log(res)
-                    this.setState({
-                        courseName: "",
-                        front9: parseInt(0),
-                        back9: parseInt(0),
-                        courseRating: parseInt(0),
-                        courseSlope: parseInt(0),
-                        totalScore: parseInt(0)
+                axios.post(`/api/scores`, newScore)
+                    .then(res => {
+                        console.log(res)
+                        this.setState({
+                            courseName: "",
+                            frontNine: parseInt(0),
+                            backNine: parseInt(0),
+                            courseRating: parseInt(0),
+                            courseSlope: parseInt(0),
+                            totalScore: parseInt(0)
+                        })
                     })
-                })
-                .catch(err => console.log(err))
-        })
-        this.props.onHide();
-        this.props.getScores();
+                    .catch(err => console.log(err))
+            })
+            this.props.onHide();
+            this.props.getScores();
+        }
     }
-
     render() {
         return (
             <Modal
@@ -72,37 +113,83 @@ class ScoreModal extends React.Component {
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <div className="row">
-                        <div id="leftDiv" className="col">
-                            <label>Golf Course</label>
-                            <div className="input-group mb-3">
-                                <input type="text" placeholder="ex. Cowboys Golf Course" name="courseName" value={this.state.courseName} onChange={this.handleInputChange} className="form-control" aria-describedby="basic-addon3" />
-                            </div>
-                            <label>Front 9</label>
-                            <div className="input-group mb-3">
-                                <input type="number" name="front9" min={0} value={this.state.front9} onChange={this.handleInputChange} className="form-control" aria-describedby="basic-addon3" />
-                            </div>
-                            <label>Back 9</label>
-                            <div className="input-group mb-3">
-                                <input type="number" name="back9" min={0} value={this.state.back9} onChange={this.handleInputChange} className="form-control" aria-describedby="basic-addon3" />
-                            </div>
+                    <ValidatorForm
+                        ref="form"
+                        onSubmit={this.onSubmit}
+                    >
+                        <Grid container spacing={4} className="text-center">
+                            <Grid item xs={12} >
+                                <TextValidator
+                                    required
+                                    fullWidth
+                                    label="Course Name"
+                                    onChange={this.handleInputChange}
+                                    name="courseName"
+                                    type="text"
+                                    value={this.state.courseName}
+                                    validators={['required']}
+                                    errorMessages={['this field is required']}
+                                    margin="normal"
+                                />
+                            </Grid>
+                            <Grid item xs={6} className="text-center">
+                                <TextValidator
+                                    required
+                                    label="Front Nine"
+                                    onChange={this.numberInputChange}
+                                    name="frontNine"
+                                    type="number"
+                                    value={this.state.frontNine}
+                                    validators={['required', 'isNumber']}
+                                    errorMessages={['this field is required']}
+                                    margin="normal"
+                                />
+                            </Grid>
+                            <Grid item xs={6} className="text-center">
+                                <TextValidator
+                                    label="Back Nine"
+                                    onChange={this.numberInputChange}
+                                    name="backNine"
+                                    type="number"
+                                    value={this.state.backNine}
+                                    validators={['required']}
+                                    errorMessages={['this field is required']}
+                                    margin="normal"
+                                />
+                            </Grid>
+                            <Grid item xs={6} className="text-center">
+                                <TextValidator
+                                    label="Course Rating"
+                                    onChange={this.handleInputChange}
+                                    name="courseRating"
+                                    type="number"
+                                    value={this.state.courseRating}
+                                    validators={['required']}
+                                    errorMessages={['this field is required']}
+                                    margin="normal"
+
+                                />
+                            </Grid>
+                            <Grid item xs={6} className="text-center">
+                                <TextValidator
+                                    label="Course Slope"
+                                    onChange={this.numberInputChange}
+                                    name="courseSlope"
+                                    type="number"
+                                    value={this.state.courseSlope}
+                                    validators={['required']}
+                                    errorMessages={['this field is required']}
+                                    margin="normal"
+                                />
+                            </Grid>
+                        </Grid>
+                        <div className="text-center" style={{ marginTop: '25px' }}>
+                            <button type="button" onClick={this.onSubmit} className="btn btn-success btn-block" >Submit Score</button>
+                            <p>*All inputs must be filled out to properly access your handicap. If you need help read this <a href="https://golftips.golfweek.com/explanation-golf-scorecard-2458.html" target="_blank" rel="noopener noreferrer">article!</a> </p>
+                            {this.state.formError ? <p style={{ color: 'red', fontSize: "12px", fontFamily: 'Roboto, sans-serif' }}>Error! Make sure all inputs are filled out correctly </p> : <p></p>}
+
                         </div>
-                        <div id="rightDiv" className="col">
-                            <label>Course Rating</label>
-                            <div className="input-group mb-3">
-                                <input type="number" name="courseRating" min={0} value={this.state.courseRating} onChange={this.handleInputChange} className="form-control" aria-describedby="basic-addon3" />
-                            </div>
-                            <label>Slope</label>
-                            <div className="input-group mb-3">
-                                <input type="number" name="courseSlope" min={0} value={this.state.courseSlope} onChange={this.handleInputChange} className="form-control" aria-describedby="basic-addon3" />
-                            </div>
-                        </div>
-                    </div>
-                    <div className="text-center">
-                        <h2>{parseInt(this.state.front9) + parseInt(this.state.back9)}</h2>
-                        <p>Total Score</p>
-                        <button type="button" onClick={this.onSubmit} className="btn btn-success btn-block" >Submit Score</button>
-                    </div>
+                    </ValidatorForm>
                 </Modal.Body>
             </Modal>
         )
