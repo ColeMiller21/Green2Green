@@ -79,14 +79,15 @@ class Homepage extends React.Component {
 
         axios.get(`/api/scores/` + id)
             .then(res => {
+                console.log(res.data)
                 this.setState({
                     ...this.state,
                     isLoaded: true,
-                    scores: res.data
+                    scores: [res.data]
                 }, () => console.log(this.state.scores))
                 this.getHandicap();
             })
-            .catch(err => console.log(err))
+            .catch(err => console.log(`Something failed: ${err.message}`))
     }
 
     userLogout = () => {
