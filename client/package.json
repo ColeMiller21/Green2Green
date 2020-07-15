@@ -2,7 +2,6 @@
   "name": "g2g",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://ColeMiller21.github.io/Green2Green",
   "proxy": "http://localhost:5000",
   "dependencies": {
     "@material-ui/core": "^4.11.0",
