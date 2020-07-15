@@ -4,6 +4,7 @@ const bcrypt = require('bcryptjs');
 const config = require('config');
 const jwt = require('jsonwebtoken');
 const auth = require('../../middleware/auth');
+const JWTSECRET = process.env.JWT_SECRET;
 
 //score model
 const User = require('../../models/userModel')
@@ -30,7 +31,8 @@ router.post('/', (req, res) => {
 
                     jwt.sign(
                         { id: user.id },
-                        config.get('jwtSecret'),
+                        JWTSECRET,
+                        // config.get('jwtSecret'),
                         { expiresIn: 3600 },
                         (err, token) => {
                             if (err) throw err;
