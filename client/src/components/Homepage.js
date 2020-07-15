@@ -9,11 +9,12 @@ import moment from 'moment';
 class Homepage extends React.Component {
     state = {
         show: false,
-        scores: [],
+        scores: null,
         currentUser: {},
         isCurrentUser: false,
         handicapReached: false,
         tillHandicap: 0,
+        isLoaded: false
     }
 
     componentDidMount() {
@@ -78,7 +79,11 @@ class Homepage extends React.Component {
 
         axios.get(`/api/scores/` + id)
             .then(res => {
-                this.setState({ scores: res.data }, () => console.log(this.state.scores))
+                this.setState({
+                    ...this.state,
+                    isLoaded: true,
+                    scores: res.data
+                }, () => console.log(this.state.scores))
                 this.getHandicap();
             })
             .catch(err => console.log(err))
@@ -137,7 +142,7 @@ class Homepage extends React.Component {
                             </tr>
                         </thead>
                         <tbody>
-                            {this.state.scores.map((score, i) => {
+                            {this.state.isLoaded ? this.state.scores.map((score, i) => {
                                 return (
                                     <tr key={"uniqueKey" + i}>
                                         <th scope="row" style={{ width: '20%' }}>{moment(score.createdAt).format('MM-DD-YY')}</th>
@@ -148,6 +153,8 @@ class Homepage extends React.Component {
                                     </tr>
                                 )
                             })
+                                :
+                                <h1>Loading.....</h1>
                             }
 
                         </tbody>
