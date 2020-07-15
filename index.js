@@ -16,7 +16,7 @@ const PORT = process.env.PORT || 5000
 app.use(express.json());
 
 //mongodb connection
-mongoose.connect(config.get('mongoURI'),
+mongoose.connect(config.get(process.env.MONGO_URI || 'mongoURI'),
     {
         useNewUrlParser: true,
         useUnifiedTopology: true
