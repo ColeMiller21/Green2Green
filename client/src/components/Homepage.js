@@ -143,7 +143,7 @@ class Homepage extends React.Component {
                             </tr>
                         </thead>
                         <tbody>
-                            {this.state.isLoaded ? this.state.scores.map((score, i) => {
+                            {this.state.isLoaded ? this.state.scores[0].map((score, i) => {
                                 return (
                                     <tr key={"uniqueKey" + i}>
                                         <th scope="row" style={{ width: '20%' }}>{moment(score.createdAt).format('MM-DD-YY')}</th>
