@@ -27,12 +27,13 @@ class Homepage extends React.Component {
                 }
             })
 
+
     }
 
     getHandicap = () => {
         // getting the length of scores to make sure there is enough to calculate handicap
         if (this.state.scores.length < 3) {
-            let tillHandicap = 10 - this.state.scores.length
+            let tillHandicap = 3 - this.state.scores.length
             this.setState({ tillHandicap })
         }
         //has enough of a handicap and sorting scores from least to greatest
@@ -77,7 +78,7 @@ class Homepage extends React.Component {
 
         axios.get(`/api/scores/` + id)
             .then(res => {
-                this.setState({ scores: res.data })
+                this.setState({ scores: res.data }, () => console.log(this.state.scores))
                 this.getHandicap();
             })
             .catch(err => console.log(err))
@@ -146,7 +147,8 @@ class Homepage extends React.Component {
                                         <td style={{ width: '10%' }}>{score.backNine}</td>
                                     </tr>
                                 )
-                            })}
+                            })
+                            }
 
                         </tbody>
                     </table>
