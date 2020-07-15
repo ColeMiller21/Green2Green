@@ -28,7 +28,7 @@ if (process.env.NODE_ENV === 'production') {
 
 
 //mongodb connection
-mongoose.connect(config.get(process.env.MONGODB_URI || 'mongoURI'),
+mongoose.connect(process.env.MONGODB_URI || config.get('mongoURI'),
     {
         useNewUrlParser: true,
         useUnifiedTopology: true
