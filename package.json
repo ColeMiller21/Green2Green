@@ -15,6 +15,7 @@
   "author": "Cole Miller",
   "license": "ISC",
   "devDependencies": {
+    "morgan": "^1.10.0",
     "nodemon": "^2.0.4"
   },
   "dependencies": {

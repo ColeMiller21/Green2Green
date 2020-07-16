@@ -13,6 +13,8 @@ const auth = require('./routes/api/auth');
 const app = express();
 const PORT = process.env.PORT || 5000
 
+
+app.use(morgain('tiny'));
 //bodyparser
 app.use(express.json());
 

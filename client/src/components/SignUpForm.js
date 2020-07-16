@@ -17,7 +17,6 @@ class SignUpForm extends React.Component {
     componentDidMount() {
         ValidatorForm.addValidationRule('isPasswordMatch', (value) => {
             if (value !== this.state.password) {
-
                 return false
             }
             this.setState({ buttonDisabled: false })
@@ -45,7 +44,7 @@ class SignUpForm extends React.Component {
                 email: this.state.email,
                 password: this.state.password
             }
-            axios.post(`https://shielded-lowlands-75979.herokuapp.com//api/users`, newUser)
+            axios.post(`/api/users`, newUser)
                 .then(res => {
                     if (res.data) {
                         console.log(res.data)
