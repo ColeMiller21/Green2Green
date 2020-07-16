@@ -77,7 +77,7 @@ class Homepage extends React.Component {
     getUserScores = () => {
         let id = this.state.currentUser._id
 
-        axios.get(`/api/scores/` + id)
+        axios.get(`https://localhost:5000/api/scores/` + id)
             .then(res => {
 
                 this.setState({
@@ -153,6 +153,7 @@ class Homepage extends React.Component {
                                         <td style={{ width: '10%' }}>{score.frontNine}</td>
                                         <td style={{ width: '10%' }}>{score.backNine}</td>
                                     </tr>
+
                                 )
                             })
                                 :
