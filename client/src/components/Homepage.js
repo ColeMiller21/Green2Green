@@ -107,19 +107,19 @@ class Homepage extends React.Component {
 
     render() {
 
-        // const scoreRender = this.state.scores.map((score, i) => {
-        //     console.log(score)
-        //     return (
-        //         <tr key={"uniqueKey" + i}>
-        //             <th scope="row" style={{ width: '20%' }}>{moment(score.createdAt).format('MM-DD-YY')}</th>
-        //             <td style={{ width: '10%' }}>{score.totalScore}</td>
-        //             <td style={{ width: '40%' }}>{score.courseName}</td>
-        //             <td style={{ width: '10%' }}>{score.frontNine}</td>
-        //             <td style={{ width: '10%' }}>{score.backNine}</td>
-        //         </tr>
+        const scoreRender = this.state.scores.map((score, i) => {
+            console.log(score)
+            return (
+                <tr key={"uniqueKey" + i}>
+                    <th scope="row" style={{ width: '20%' }}>{moment(score.createdAt).format('MM-DD-YY')}</th>
+                    <td style={{ width: '10%' }}>{score.totalScore}</td>
+                    <td style={{ width: '40%' }}>{score.courseName}</td>
+                    <td style={{ width: '10%' }}>{score.frontNine}</td>
+                    <td style={{ width: '10%' }}>{score.backNine}</td>
+                </tr>
 
-        //     )
-        // })
+            )
+        })
 
         return (
             <div>
@@ -160,7 +160,7 @@ class Homepage extends React.Component {
                         </thead>
                         <tbody>
                             {this.state.isLoaded ?
-                                <h1>Got User info</h1>
+                                { scoreRender }
                                 :
                                 <h1>Loading.....</h1>
                             }
