@@ -53,12 +53,12 @@ class SignUpForm extends React.Component {
                         this.props.history.push('/');
                     } else {
                         alert("Sign up unsuccessful")
-                        //maybe submit error here 
                     }
                 })
                 .catch(err => {
                     if (err) {
                         this.setState({ submitError: true })
+                        console.error(error)
                     }
                 })
         }

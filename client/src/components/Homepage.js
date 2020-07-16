@@ -160,7 +160,7 @@ class Homepage extends React.Component {
                         </thead>
                         <tbody>
                             {this.state.isLoaded ?
-                                <h1>Got User info, {this.state.currentUser}</h1>
+                                <h1>Got User info</h1>
                                 :
                                 <h1>Loading.....</h1>
                             }
