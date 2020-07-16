@@ -1,9 +1,9 @@
 require("dotenv").config();
 const express = require('express');
 const mongoose = require('mongoose');
-const config = require('config');
 const cors = require('cors')
 const path = require('path');
+const MONGO_LOCAL = process.env.MONGO_LOCAL;
 
 // all routes
 const scores = require('./routes/api/scores');
@@ -13,6 +13,8 @@ const auth = require('./routes/api/auth');
 const app = express();
 const PORT = process.env.PORT || 5000
 
+//cors setup
+app.use(cors());
 
 
 //bodyparser
@@ -31,15 +33,13 @@ if (process.env.NODE_ENV === 'production') {
 
 
 //mongodb connection
-mongoose.connect(process.env.MONGODB_URI || config.get('mongoURI'),
+mongoose.connect(process.env.MONGODB_URI || MONGO_LOCAL,
     {
         useNewUrlParser: true,
         useUnifiedTopology: true
     })
     .then(() => console.log("MongoDB connected..."));
 
-//cors setup
-app.use(cors());
 
 
 //use routes
