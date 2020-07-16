@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const config = require('config');
 const cors = require('cors')
 const path = require('path');
+const morgan = require('morgan')
 
 // all routes
 const scores = require('./routes/api/scores');
@@ -14,7 +15,7 @@ const app = express();
 const PORT = process.env.PORT || 5000
 
 
-app.use(morgain('tiny'));
+app.use(morgan('tiny'));
 //bodyparser
 app.use(express.json());
 
