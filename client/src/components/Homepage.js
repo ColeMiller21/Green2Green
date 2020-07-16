@@ -27,7 +27,7 @@ class Homepage extends React.Component {
                     this.setState({ currentUser: res.data, isCurrentUser: true }, () => this.getUserScores());
                 }
             })
-            .catch(err => console.log(err))
+            .catch(error => console.error(error))
 
 
     }
@@ -144,7 +144,7 @@ class Homepage extends React.Component {
                             </tr>
                         </thead>
                         <tbody>
-                            {this.state.isLoaded ? this.state.scores.map((score, i) => {
+                            {this.state.scores.length > 1 ? this.state.scores.map((score, i) => {
                                 console.log(score)
                                 return (
                                     <tr key={"uniqueKey" + i}>
