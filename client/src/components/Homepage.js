@@ -20,7 +20,7 @@ class Homepage extends React.Component {
     componentDidMount() {
         // grabbing current user from localstorage
         // passing the signed in user token as a header
-        axios.get(`/api/auth/user`, { 'headers': { 'x-auth-token': localStorage.getItem('token') } })
+        axios.get(`https://shielded-lowlands-75979.herokuapp.com/api/auth/user`, { 'headers': { 'x-auth-token': localStorage.getItem('token') } })
             .then(res => {
                 // res.data is the the user object after being verified through the auth/user endpoint
                 if (res.data) {
@@ -70,14 +70,14 @@ class Homepage extends React.Component {
         }
         let finalHandicap = Math.round(sum / array.length)
         //axios call to update user handicap
-        axios.put('/api/users/' + this.state.currentUser._id, { totalHandicap: finalHandicap })
+        axios.put('https://shielded-lowlands-75979.herokuapp.com/api/users/' + this.state.currentUser._id, { totalHandicap: finalHandicap })
             .then(res => console.log(res.data));
     }
     //function to grab scores based on userId
     getUserScores = () => {
         let id = this.state.currentUser._id
 
-        axios.get(`https://localhost:5000/api/scores/` + id)
+        axios.get(`https://shielded-lowlands-75979.herokuapp.com/api/scores/` + id)
             .then(res => {
 
                 this.setState({

@@ -25,7 +25,7 @@ class SignInForm extends React.Component {
             email: this.state.email,
             password: this.state.password
         }
-        axios.post(`/api/auth`, user)
+        axios.post(`https://shielded-lowlands-75979.herokuapp.com/api/auth`, user)
             .then(res => {
                 if (res.data) {
                     let data = res.data

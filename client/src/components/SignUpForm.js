@@ -45,7 +45,7 @@ class SignUpForm extends React.Component {
                 email: this.state.email,
                 password: this.state.password
             }
-            axios.post(`/api/users`, newUser)
+            axios.post(`https://shielded-lowlands-75979.herokuapp.com//api/users`, newUser)
                 .then(res => {
                     if (res.data) {
                         console.log(res.data)
