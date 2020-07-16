@@ -9,7 +9,7 @@ import moment from 'moment';
 class Homepage extends React.Component {
     state = {
         show: false,
-        scores: null,
+        scores: [],
         currentUser: {},
         isCurrentUser: false,
         handicapReached: false,
@@ -27,6 +27,7 @@ class Homepage extends React.Component {
                     this.setState({ currentUser: res.data, isCurrentUser: true }, () => this.getUserScores());
                 }
             })
+            .catch(err => console.log(err))
 
 
     }
