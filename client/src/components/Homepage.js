@@ -144,21 +144,21 @@ class Homepage extends React.Component {
                             </tr>
                         </thead>
                         <tbody>
-                            {this.state.scores.length > 1 ? this.state.scores.map((score, i) => {
-                                console.log(score)
-                                return (
-                                    <tr key={"uniqueKey" + i}>
-                                        <th scope="row" style={{ width: '20%' }}>{moment(score.createdAt).format('MM-DD-YY')}</th>
-                                        <td style={{ width: '10%' }}>{score.totalScore}</td>
-                                        <td style={{ width: '40%' }}>{score.courseName}</td>
-                                        <td style={{ width: '10%' }}>{score.frontNine}</td>
-                                        <td style={{ width: '10%' }}>{score.backNine}</td>
-                                    </tr>
-
-                                )
-                            })
+                            {this.state.scores.length === 0 ? <h1>Insert a new score!</h1>
                                 :
-                                <h1>Loading.....</h1>
+                                this.state.scores.map((score, i) => {
+                                    console.log(score)
+                                    return (
+                                        <tr key={"uniqueKey" + i}>
+                                            <th scope="row" style={{ width: '20%' }}>{moment(score.createdAt).format('MM-DD-YY')}</th>
+                                            <td style={{ width: '10%' }}>{score.totalScore}</td>
+                                            <td style={{ width: '40%' }}>{score.courseName}</td>
+                                            <td style={{ width: '10%' }}>{score.frontNine}</td>
+                                            <td style={{ width: '10%' }}>{score.backNine}</td>
+                                        </tr>
+
+                                    )
+                                })
                             }
 
                         </tbody>
