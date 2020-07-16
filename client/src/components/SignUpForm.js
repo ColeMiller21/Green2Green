@@ -55,8 +55,8 @@ class SignUpForm extends React.Component {
                         alert("Sign up unsuccessful")
                     }
                 })
-                .catch(err => {
-                    if (err) {
+                .catch(error => {
+                    if (error) {
                         this.setState({ submitError: true })
                         console.error(error)
                     }
