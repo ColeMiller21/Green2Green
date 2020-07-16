@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
-const config = require('config');
 const jwt = require('jsonwebtoken');
 const auth = require('../../middleware/auth');
 const JWTSECRET = process.env.JWT_SECRET;
@@ -32,7 +31,6 @@ router.post('/', (req, res) => {
                     jwt.sign(
                         { id: user.id },
                         JWTSECRET,
-                        // config.get('jwtSecret'),
                         { expiresIn: 3600 },
                         (err, token) => {
                             if (err) throw err;
@@ -57,6 +55,8 @@ router.get('/user', auth, (req, res) => {
     User.findById(req.user.id)
         .select('-password')
         .then(user => res.json(user));
+}).catch(error => {
+    res.status(400).send(error)
 })
 
 
