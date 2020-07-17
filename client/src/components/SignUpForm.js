@@ -2,6 +2,7 @@ import React from 'react';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+
 import './mediastyles.css';
 
 class SignUpForm extends React.Component {
@@ -10,7 +11,11 @@ class SignUpForm extends React.Component {
         email: '',
         password: '',
         confirmPassword: "",
+        containsNumbers: false,
+        passwordLength: false,
+        isUpperCase: false,
         submitError: false,
+        passwordMatch: false,
         buttonDisabled: true
     }
 
@@ -27,41 +32,71 @@ class SignUpForm extends React.Component {
     componentWillUnmount() {
         ValidatorForm.removeValidationRule('isPasswordMatch')
     }
-
-    handleChange = (e) => {
-        this.setState({ [e.target.name]: e.target.value })
+    //password check for numbers
+    checkForNumbers = (password) => {
+        var matches = password.match(/\d+/g);
+        this.setState({
+            containsNumbers: matches != null ? true : false
+        })
     }
+
+    //password check for uppercase
+    checkForUpper = (password) => {
+        var matches = password.match(/[A-Z]/);
+        this.setState({
+            isUpperCase: matches != null ? true : false
+        })
+    }
+    //email handle change
+    handleEmailChange = (e) => {
+        let target = e.target.value
+        this.setState({ email: target })
+    }
+    //password handle change
+    handlePasswordChange = (e) => {
+        let target = e.target.value
+        this.checkForNumbers(target)
+        this.checkForUpper(target)
+        this.setState({
+            password: target,
+            passwordLength: target.length > 8 ? true : false
+        })
+    }
+    //password confirm handle change
+    handleConfirmChange = (e) => {
+        let target = e.target.value
+        this.setState({ confirmPassword: target })
+    }
+
 
     onSubmit = (e) => {
         e.preventDefault();
-        if (!this.state.submitError) {
-            this.setState({ submitError: true })
 
-        }
-        else {
+        //this needs to be fixed for the double button click!
 
-            let newUser = {
-                email: this.state.email,
-                password: this.state.password
-            }
-            axios.post(`/api/users`, newUser)
-                .then(res => {
-                    if (res.data) {
-                        console.log(res.data)
-                        let data = res.data;
-                        console.log(data.user.id)
-                        this.props.history.push('/');
-                    } else {
-                        alert("Sign up unsuccessful")
-                    }
-                })
-                .catch(error => {
-                    if (error) {
-                        this.setState({ submitError: true })
-                        console.error(error)
-                    }
-                })
+
+        let newUser = {
+            email: this.state.email,
+            password: this.state.password
         }
+        axios.post(`/api/users`, newUser)
+            .then(res => {
+                if (res.data) {
+                    console.log(res.data)
+                    let data = res.data;
+                    console.log(data.user.id)
+                    this.props.history.push('/');
+                } else {
+                    alert("Sign up unsuccessful")
+                }
+            })
+            .catch(error => {
+                if (error) {
+                    this.setState({ submitError: true })
+                    console.error(error)
+                }
+            })
+
     }
     render() {
         return (
@@ -80,7 +115,7 @@ class SignUpForm extends React.Component {
                             <div className="text-center">
                                 <TextValidator
                                     label="Email"
-                                    onChange={this.handleChange}
+                                    onChange={e => this.handleEmailChange(e)}
                                     name="email"
                                     value={this.state.email}
                                     validators={['required', 'isEmail']}
@@ -91,7 +126,7 @@ class SignUpForm extends React.Component {
                             <div className="text-center">
                                 <TextValidator
                                     label="Password"
-                                    onChange={this.handleChange}
+                                    onChange={e => this.handlePasswordChange(e)}
                                     name="password"
                                     type="password"
                                     value={this.state.password}
@@ -100,16 +135,23 @@ class SignUpForm extends React.Component {
                                     margin="normal"
                                 />
                             </div>
+                            <div>
+                                <ul style={styles.passwordList}>
+                                    <li style={this.state.passwordLength ? styles.green : null}>Must be more than 8 characters</li>
+                                    <li style={this.state.containsNumbers ? styles.green : null}>Must contain 1 number</li>
+                                    <li style={this.state.isUpperCase ? styles.green : null}>Must contain 1 uppercase letter</li>
+                                </ul>
+                            </div>
                             <div className="text-center">
                                 <TextValidator
                                     label="Confirm Password"
-                                    onChange={this.handleChange}
+                                    onChange={e => this.handleConfirmChange(e)}
                                     name="confirmPassword"
                                     type="password"
                                     validators={['isPasswordMatch', 'required']}
                                     errorMessages={['password mismatch', 'this field is required']}
                                     value={this.state.confirmPassword}
-                                    margin="normal"
+
                                 />
                             </div>
 
@@ -149,6 +191,13 @@ const styles = {
         left: '50%',
         marginRight: '-50%',
         transform: 'translate(-50%, -50%)'
+    },
+    passwordList: {
+        fontSize: '10px'
+    },
+    green: {
+        color: 'green',
+        fontWeight: 600
     }
 }
 
