@@ -21,13 +21,7 @@ app.use(cors());
 app.use(express.json());
 
 
-//Serve static assets if in production
-if (process.env.NODE_ENV === 'production') {
-    //set static folder
-    app.use(express.static('client/build'));
 
-
-}
 
 
 //mongodb connection
@@ -45,10 +39,16 @@ app.use('/api/scores', scores)
 app.use('/api/users', user)
 app.use('/api/auth', auth)
 
+//Serve static assets if in production
+if (process.env.NODE_ENV === 'production') {
+    //set static folder
+    app.use(express.static('client/build'));
+    app.get('*', (req, res) => {
+        res.sendFile(path.join(__dirname, "client", "public", "index.html"))
+    });
 
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, "client", "public", "index.html"))
-});
+}
+
 
 app.listen(process.env.PORT || PORT, () => {
     console.log(`Server started on PORT ${PORT}`);

@@ -158,7 +158,8 @@ class ScoreModal extends React.Component {
                             </Grid>
                             <Grid item xs={6} className="text-center">
                                 <TextValidator
-                                    label="Course Rating ex. 68.5"
+                                    label="Rating ex. 68.5"
+                                    defaultValue="ex. 68.5"
                                     onChange={this.handleInputChange}
                                     name="courseRating"
                                     type="number"
@@ -171,7 +172,7 @@ class ScoreModal extends React.Component {
                             </Grid>
                             <Grid item xs={6} className="text-center">
                                 <TextValidator
-                                    label="Course Slope ex. 113"
+                                    label="Slope ex. 113"
                                     onChange={this.numberInputChange}
                                     name="courseSlope"
                                     type="number"
