@@ -15,7 +15,7 @@ const Banner = (props) => {
 
                 {props.handicapReached ?
                     <div>
-                        <h1 style={{ fontSize: '6rem' }} className="text-center">{props.currentUser.totalHandicap}</h1>
+                        <h1 style={{ fontSize: '6rem' }} className="text-center">{props.currentUser.totalHandicap.toFixed(1)}</h1>
                         <h1 style={{ fontSize: '1.5rem' }} className="text-center">Handicap</h1>
                     </div>
                     : <div><h1 style={{ fontSize: '6rem' }} className="text-center">00</h1>

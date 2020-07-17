@@ -107,6 +107,8 @@ class Homepage extends React.Component {
 
         let finalHandicap = handicapAverage * .96
 
+        finalHandicap = finalHandicap.toFixed(1)
+
         // axios call to update user handicap
         axios.put('/api/users/' + this.state.currentUser._id, { totalHandicap: finalHandicap })
             .then(res => res);
