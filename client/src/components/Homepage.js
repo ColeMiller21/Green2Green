@@ -60,6 +60,7 @@ class Homepage extends React.Component {
                 calcScores.push(parseFloat(calcHandicap))
                 //sorting handicap differentials in order from lowest to highest
                 calcScores.sort((a, b) => a - b)
+                console.log(calcScores)
 
             })
             if (calcScores.length === 5 || calcScores.length === 6)
@@ -152,7 +153,6 @@ class Homepage extends React.Component {
                         <tbody>
                             {this.state.isLoaded ?
                                 this.state.scores.map((score, i) => {
-                                    console.log(score)
                                     return (
                                         <tr key={"uniqueKey" + i}>
                                             <th scope="row" style={{ width: '20%' }}>{moment(score.createdAt).format('MM-DD-YY')}</th>
