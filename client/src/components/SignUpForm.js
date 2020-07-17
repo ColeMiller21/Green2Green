@@ -82,9 +82,9 @@ class SignUpForm extends React.Component {
         axios.post(`/api/users`, newUser)
             .then(res => {
                 if (res.data) {
-                    console.log(res.data)
+
                     let data = res.data;
-                    console.log(data.user.id)
+
                     this.props.history.push('/');
                 } else {
                     alert("Sign up unsuccessful")

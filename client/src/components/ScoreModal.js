@@ -59,12 +59,12 @@ class ScoreModal extends React.Component {
     onSubmit = (e) => {
         e.preventDefault();
         if (!this.handleValidation(this.state)) {
-            console.log("Form Error")
+
             this.setState({ formError: true })
 
         } else {
             this.setState({ totalScore: Number(this.state.frontNine) + Number(this.state.backNine) }, () => {
-                console.log("Form Submitted")
+
                 this.setState({ formError: false })
                 let newScore = {
                     //this will be the current user id
@@ -79,7 +79,7 @@ class ScoreModal extends React.Component {
 
                 axios.post(`/api/scores`, newScore)
                     .then(res => {
-                        console.log(res)
+
                         this.setState({
                             courseName: "",
                             frontNine: parseInt(0),
