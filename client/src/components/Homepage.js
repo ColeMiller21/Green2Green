@@ -34,8 +34,8 @@ class Homepage extends React.Component {
 
     getHandicap = () => {
         // getting the length of scores to make sure there is enough to calculate handicap
-        if (this.state.scores.length < 3) {
-            let tillHandicap = 3 - this.state.scores.length
+        if (this.state.scores.length < 5) {
+            let tillHandicap = 5 - this.state.scores.length
             this.setState({ tillHandicap })
         }
         //has enough of a handicap and sorting scores from least to greatest
@@ -55,11 +55,15 @@ class Homepage extends React.Component {
                 let calcHandicap = parseInt(score.totalScore) - parseInt(score.courseRating)
                 calcHandicap = calcHandicap * 113
                 calcHandicap = calcHandicap / score.courseSlope
-                calcHandicap = calcHandicap.toFixed(2)
+                calcHandicap = calcHandicap.toFixed(1)
+                //calcScores is the Handicap Differentials for each score
                 calcScores.push(parseFloat(calcHandicap))
+                //sorting handicap differentials in order from lowest to highest
+                calcScores.sort((a, b) => a - b)
 
             })
-            this.averageHandicap(calcScores)
+            if (calcScores.length === 5 || calcScores.length === 6)
+                this.averageHandicap(calcScores)
         }
     }
 
@@ -69,7 +73,7 @@ class Homepage extends React.Component {
         for (let i = 0; i < array.length; i++) {
             sum += array[i]
         }
-        let finalHandicap = Math.round(sum / array.length)
+        let finalHandicap = (sum / array.length).toFixed(1)
         //axios call to update user handicap
         axios.put('/api/users/' + this.state.currentUser._id, { totalHandicap: finalHandicap })
             .then(res => console.log(res.data));
@@ -161,7 +165,7 @@ class Homepage extends React.Component {
                                     )
                                 })
                                 :
-                                <h1>Loading.....</h1>
+                                null
                             }
 
                         </tbody>

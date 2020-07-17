@@ -19,7 +19,6 @@ class ScoreModal extends React.Component {
     }
 
     handleValidation = (state) => {
-        console.log(state)
         if (state.courseName === "") {
             return false
         }
@@ -159,7 +158,7 @@ class ScoreModal extends React.Component {
                             </Grid>
                             <Grid item xs={6} className="text-center">
                                 <TextValidator
-                                    label="Course Rating"
+                                    label="Course Rating ex. 68.5"
                                     onChange={this.handleInputChange}
                                     name="courseRating"
                                     type="number"
@@ -172,7 +171,7 @@ class ScoreModal extends React.Component {
                             </Grid>
                             <Grid item xs={6} className="text-center">
                                 <TextValidator
-                                    label="Course Slope"
+                                    label="Course Slope ex. 113"
                                     onChange={this.numberInputChange}
                                     name="courseSlope"
                                     type="number"
