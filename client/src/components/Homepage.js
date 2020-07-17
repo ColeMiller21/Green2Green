@@ -47,11 +47,6 @@ class Homepage extends React.Component {
             })
             //calculating handicap per score and putting them in a score array
             this.state.scores.forEach(score => {
-                console.log({
-                    total: score.totalScore,
-                    slope: score.courseSlope,
-                    rating: score.courseRating
-                })
                 let calcHandicap = parseInt(score.totalScore) - parseInt(score.courseRating)
                 calcHandicap = calcHandicap * 113
                 calcHandicap = calcHandicap / score.courseSlope
@@ -114,7 +109,7 @@ class Homepage extends React.Component {
 
         // axios call to update user handicap
         axios.put('/api/users/' + this.state.currentUser._id, { totalHandicap: finalHandicap })
-            .then(res => console.log(res.data));
+            .then(res => res);
     }
     //function to grab scores based on userId
     getUserScores = () => {
