@@ -60,11 +60,45 @@ class Homepage extends React.Component {
                 calcScores.push(parseFloat(calcHandicap))
                 //sorting handicap differentials in order from lowest to highest
                 calcScores.sort((a, b) => a - b)
-                console.log(calcScores)
+
 
             })
-            if (calcScores.length === 5 || calcScores.length === 6)
+            if (calcScores.length === 5 || calcScores.length === 6) {
+                calcScores = calcScores.slice(0, 1)
                 this.averageHandicap(calcScores)
+            }
+            if (calcScores.length === 7 || calcScores.length === 8) {
+                calcScores = calcScores.slice(0, 2)
+                this.averageHandicap(calcScores)
+            }
+            if (calcScores.length === 9 || calcScores.length === 10) {
+                calcScores = calcScores.slice(0, 3)
+                this.averageHandicap(calcScores)
+            }
+            if (calcScores.length === 11 || calcScores.length === 12) {
+                calcScores = calcScores.slice(0, 4)
+                this.averageHandicap(calcScores)
+            }
+            if (calcScores.length === 13 || calcScores.length === 14) {
+                calcScores = calcScores.slice(0, 5)
+                this.averageHandicap(calcScores)
+            }
+            if (calcScores.length === 17) {
+                calcScores = calcScores.slice(0, 7)
+                this.averageHandicap(calcScores)
+            }
+            if (calcScores.length === 18) {
+                calcScores = calcScores.slice(0, 8)
+                this.averageHandicap(calcScores)
+            }
+            if (calcScores.length === 19) {
+                calcScores = calcScores.slice(0, 9)
+                this.averageHandicap(calcScores)
+            }
+            if (calcScores.length >= 20) {
+                calcScores = calcScores.slice(0, 10)
+                this.averageHandicap(calcScores)
+            }
         }
     }
 
@@ -74,8 +108,11 @@ class Homepage extends React.Component {
         for (let i = 0; i < array.length; i++) {
             sum += array[i]
         }
-        let finalHandicap = (sum / array.length).toFixed(1)
-        //axios call to update user handicap
+        let handicapAverage = (sum / array.length)
+
+        let finalHandicap = handicapAverage * .96
+
+        // axios call to update user handicap
         axios.put('/api/users/' + this.state.currentUser._id, { totalHandicap: finalHandicap })
             .then(res => console.log(res.data));
     }

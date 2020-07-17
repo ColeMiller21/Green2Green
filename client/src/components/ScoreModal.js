@@ -22,16 +22,16 @@ class ScoreModal extends React.Component {
         if (state.courseName === "") {
             return false
         }
-        if (state.frontNine === "") {
+        if (state.frontNine === "" || parseInt(state.frontNine) <= 0) {
             return false
         }
-        if (state.backNine === "") {
+        if (state.backNine === "" || parseInt(state.backNine) <= 0) {
             return false
         }
-        if (state.courseSlope === "") {
+        if (state.courseSlope === "" || parseInt(state.courseSlope) <= 0) {
             return false
         }
-        if (state.courseRating === "") {
+        if (state.courseRating === "" || parseInt(state.courseRating) <= 0) {
             return false
         }
         else {
@@ -139,7 +139,7 @@ class ScoreModal extends React.Component {
                                     name="frontNine"
                                     type="number"
                                     value={this.state.frontNine}
-                                    validators={['required', 'isNumber']}
+                                    validators={['minNumber:0', 'required', 'isNumber']}
                                     errorMessages={['this field is required']}
                                     margin="normal"
                                 />
@@ -151,7 +151,7 @@ class ScoreModal extends React.Component {
                                     name="backNine"
                                     type="number"
                                     value={this.state.backNine}
-                                    validators={['required']}
+                                    validators={['minNumber:0', 'required']}
                                     errorMessages={['this field is required']}
                                     margin="normal"
                                 />
@@ -163,7 +163,7 @@ class ScoreModal extends React.Component {
                                     name="courseRating"
                                     type="number"
                                     value={this.state.courseRating}
-                                    validators={['required']}
+                                    validators={['minNumber:0', 'required']}
                                     errorMessages={['this field is required']}
                                     margin="normal"
 
@@ -176,7 +176,7 @@ class ScoreModal extends React.Component {
                                     name="courseSlope"
                                     type="number"
                                     value={this.state.courseSlope}
-                                    validators={['required']}
+                                    validators={['minNumber:0', 'required']}
                                     errorMessages={['this field is required']}
                                     margin="normal"
                                 />
@@ -185,6 +185,7 @@ class ScoreModal extends React.Component {
                         <div className="text-center" style={{ marginTop: '25px' }}>
                             <button type="button" onClick={this.onSubmit} className="btn btn-success btn-block" >Submit Score</button>
                             <p>*All inputs must be filled out to properly access your handicap. If you need help read this <a href="https://golftips.golfweek.com/explanation-golf-scorecard-2458.html" target="_blank" rel="noopener noreferrer">article!</a> </p>
+                            <p>If you need help figuring out the course slope and rating you can visit the USGA <a href="https://ncrdb.usga.org/" target="_blank" rel="noopener noreferrer">website!</a></p>
                             {this.state.formError ? <p style={{ color: 'red', fontSize: "12px", fontFamily: 'Roboto, sans-serif' }}>Error! Make sure all inputs are filled out correctly </p> : <p></p>}
 
                         </div>
